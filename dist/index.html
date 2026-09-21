@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#081426" />
+  <meta name="description" content="Draw-to-Life World turns a child's drawing into a talking character." />
+  <title>Draw-to-Life World</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23ffcb66'/%3E%3Cpath d='M17 39c8-24 25-25 30-8 4 13-10 21-21 14' fill='none' stroke='%23091426' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell wizard-shell">
+    <header class="topbar"><a class="brand" href="#" aria-label="Draw-to-Life World home"><span class="brand-mark">✦</span><span>DRAW<span>TO</span>LIFE</span></a><div class="topbar-meta"><span class="live-dot"></span><span>EXHIBITION MODE</span><span class="divider"></span><span id="session-id">SESSION 001</span></div></header>
+    <main class="wizard" id="wizard">
+      <div class="wizard-progress"><span class="progress-label" id="progress-label">WELCOME</span><div class="progress-track"><span id="progress-bar"></span></div><span id="progress-count">01 / 05</span></div>
+
+      <section class="wizard-screen active" id="welcome-screen">
+        <div class="welcome-copy"><p class="eyebrow">A little paper. A whole new world.</p><h1>Draw something<br /><em>beautiful.</em></h1><p class="intro-copy">Your drawing is about to become a living character. Give it a face, a feeling, and a little bit of magic.</p><button class="primary-button hero-button" id="next-button" type="button">I’M READY <span>↗</span></button></div>
+        <div class="welcome-art" aria-hidden="true"><div class="paper-sheet"><span class="sun">✦</span><div class="paper-creature"><i></i><i></i><b></b></div><div class="paper-line line-one"></div><div class="paper-line line-two"></div></div><div class="pencil pencil-one"></div><div class="pencil pencil-two"></div><span class="art-note note-one">your idea</span><span class="art-note note-two">→ alive</span></div>
+      </section>
+
+      <section class="wizard-screen" id="source-screen">
+        <div class="screen-heading"><p class="eyebrow">STEP 01 · BRING YOUR DRAWING</p><h2>How will you show it to us?</h2><p class="muted">Choose one. We’ll understand it, then take you into the magic room.</p></div>
+        <div class="source-options"><button class="source-option" id="camera-option" type="button"><span class="source-icon">◉</span><span><strong>Live camera</strong><small>Show your drawing directly to the camera</small></span><b>↗</b></button><button class="source-option" id="upload-option" type="button"><span class="source-icon">▧</span><span><strong>Upload a drawing</strong><small>Choose an image or PDF from this device</small></span><b>↗</b></button></div>
+        <div class="capture-zone" id="capture-zone" hidden><video id="camera-video" autoplay playsinline muted hidden></video><div class="capture-empty" id="capture-empty"><span>◉</span><strong>Camera window</strong><small>Press start, then hold your drawing in the frame.</small><button class="secondary-button" id="start-camera" type="button">START CAMERA</button></div><div class="pdf-ready" id="pdf-ready" hidden><span>PDF</span><strong id="pdf-name">Drawing ready</strong><small>The first page will be read by the scanner.</small></div><img id="source-preview" alt="Drawing preview" hidden /><div class="scan-corners" aria-hidden="true"></div></div>
+        <input id="file-input" type="file" accept="image/*,application/pdf" hidden />
+        <button class="primary-button continue-button" id="source-continue" type="button" disabled>CONTINUE <span>→</span></button><p class="scan-status" id="source-status">Choose a camera or upload option to begin.</p>
+      </section>
+
+      <section class="wizard-screen" id="creation-screen">
+        <div class="creation-orbit"><div class="creation-core">✦</div><div class="creation-ring ring-a"></div><div class="creation-ring ring-b"></div><span class="creation-dot dot-a"></span><span class="creation-dot dot-b"></span></div>
+        <p class="eyebrow">STEP 02 · THE MAGIC ROOM</p><h2 id="creation-title">Understanding your drawing…</h2><p class="creation-copy" id="creation-copy">Looking at shapes, colors, movement, and the little personality hiding inside.</p><div class="creation-steps"><span class="done">✓ <b>Drawing received</b></span><span id="shape-step">○ <b>Understanding its shape</b></span><span id="life-step">○ <b>Giving it a voice</b></span></div><div class="creation-progress"><span id="creation-progress-bar"></span></div>
+      </section>
+
+      <section class="wizard-screen" id="alive-screen">
+        <div class="success-kicker"><span>✦</span> CREATION COMPLETE <span>✦</span></div><h2 id="alive-title">Your drawing is alive.</h2><p class="muted alive-subtitle">Meet the character you made.</p>
+        <div class="alive-grid"><div class="alive-stage" id="alive-stage"><div class="stage-stars" aria-hidden="true"><i>✦</i><i>·</i><i>✧</i><i>·</i><i>✦</i></div><div class="real-drawing-character" id="real-drawing-character"><img id="character-art" alt="The child's drawing brought to life" /><span class="art-aura"></span><span class="art-shadow"></span></div><div class="speech-bubble" id="speech-bubble">Hi! I’m ready to meet you.</div><span class="stage-label">YOUR DRAWING · LIVE</span></div><div class="character-info"><p class="kicker">MEET</p><h3 id="character-name">Rocky the Dragon</h3><p id="character-type">A brave little dragon with a big imagination.</p><div class="voice-controls"><label>LANGUAGE<select id="language-select"><option value="en-US">English</option><option value="si-LK">සිංහල · Sinhala</option><option value="ta-LK">தமிழ் · Tamil</option></select></label><label>VOICE<select id="voice-style"><option value="warm">Warm</option><option value="bright">Bright</option><option value="deep">Deep</option></select></label></div><button class="round-button" id="speak-button" type="button" aria-label="Make character speak">◖</button></div></div>
+        <div class="conversation panel"><div class="conversation-head"><div><p class="kicker">YOUR TURN</p><h3>Talk with your creation</h3></div><span class="online-badge"><i></i> LISTENING</span></div><div class="chat-log" id="chat-log"><div class="chat-line character-line"><span>✦</span><p>Ask me anything. I’m here.</p></div></div><div class="chat-input-row"><input id="message-input" type="text" placeholder="Type a question or use your voice…" autocomplete="off" /><button class="voice-button" id="talk-button" type="button" aria-label="Talk with voice">●</button><button class="send-button" id="send-button" type="button">SEND ↗</button></div><p class="talk-hint" id="talk-hint">Choose your language above, then talk naturally.</p></div>
+        <button class="restart-button" id="restart-button" type="button">END THIS CREATION · START NEXT CHILD ↻</button>
+      </section>
+    </main>
+    <footer><span>DRAW-TO-LIFE WORLD</span><span>Every drawing has a story.</span><span>Made for curious minds ✦</span></footer>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>

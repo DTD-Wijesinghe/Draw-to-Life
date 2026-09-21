@@ -1,0 +1,8 @@
+{
+  "name": "draw-to-life-world",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Interactive exhibition prototype that turns children's drawings into talking characters.",
+  "scripts": { "start": "node server.js", "dev": "node server.js" },
+  "engines": { "node": ">=18" }
+}
