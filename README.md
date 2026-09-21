@@ -1,61 +1,77 @@
-# Draw-to-Life World
+# ✦ Draw-to-Life World
 
-An exhibition prototype where a child's drawing becomes an animated character with a voice and a tiny story.
+An interactive exhibition prototype that turns children's drawings (monsters, animals, cars, superheroes, etc.) into talking digital characters with unique personalities and stories.
 
-## Run the demo
+---
 
-Requirements: Node.js 18 or newer.
+## 🌟 Key Features
+
+- **📷 Camera & File Scan**: Live camera capture or image/PDF upload.
+- **👁️ Vision AI Identification**: Automatically analyzes the drawing using Google Gemini / OpenAI Vision to identify what was drawn.
+- **✨ Character Creation**: Generates a dynamic character name, personality description, and greeting.
+- **📖 Automatic Mini Story**: Generates a magical 2-sentence mini story starring the child's character.
+- **🗣️ Multilingual Voice & Chat**: Speech output and speech recognition in English (`en-US`), Sinhala (`si-LK`), and Tamil (`ta-LK`).
+- **⚡ Zero Third-Party Node Dependencies**: Built with native Node.js standard modules (`http`, `fs`, `path`, `crypto`, `fetch`).
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- **Node.js**: Version 18.0 or newer.
+
+### Running the App
 
 ```bash
 npm start
 ```
 
-Open the URL printed by the server in Chrome or Edge. The project runs in mock mode without API keys and demonstrates the complete loop: live camera capture or image/PDF upload, character creation, story generation, speech output, and child conversation.
+Open `http://localhost:4173` in **Google Chrome** or **Microsoft Edge**.
 
-The character stage preserves the child's original image and applies a living reaction layer: arrival motion, breathing, glow, shadow, movement while speaking, and voice bubbles. The voice panel supports English (`en-US`), Sinhala (`si-LK`), and Tamil (`ta-LK`) when the browser has a matching speech voice installed, plus warm, bright, and deep voice styles.
+> [!NOTE]
+> If no API keys are provided in `.env`, the server automatically falls back to **Mock Mode** so the exhibition flow runs smoothly out-of-the-box.
 
-The exhibition flow is now step-based: welcome prompt → camera or image/PDF choice → automatic understanding sequence → creation success screen → text/voice conversation → end and reset for the next child.
+---
 
-Camera mode needs HTTPS or `localhost` permission. PDF mode accepts the file and shows it as a scan-ready document; the production vision service should rasterize the first page before recognition.
+## ⚙️ Environment Configuration
 
-The backend is in `server.js`. The frontend is in `dist/`. API keys should never be placed in browser code.
+To enable real Vision & LLM AI generation, create a `.env` file in the root directory:
 
-Available endpoints:
+```env
+# Google Gemini API Key (Recommended)
+GEMINI_API_KEY=your_gemini_api_key_here
 
-- `GET /api/health` — check the service.
-- `POST /api/scan` — turns a drawing filename into character data in mock mode.
-- `POST /api/story` — generates a character story.
-- `POST /api/chat` — generates a character reply.
-
-## Two-member build split
-
-### Member 1 — Experience & Frontend
-
-- Own the interface in `dist/index.html` and `dist/styles.css`.
-- Own the scan/upload flow, exhibition layout, responsive behavior, animation, and accessibility.
-- Replace the local sample avatar with a transparent generated character asset when the AI pipeline is ready.
-- Suggested branch: `member-1-experience`
-
-### Member 2 — AI & Interaction Layer
-
-- Own the interaction logic in `dist/app.js` and the service layer in `server.js`.
-- Connect drawing recognition / image segmentation, character naming, text-to-speech, speech-to-text, and story generation.
-- Keep the UI contract stable: update `current` with `name`, `type`, `speech`, and `story`.
-- Suggested branch: `member-2-ai-services`
-
-## GitHub workflow
-
-```bash
-git init
-git add .
-git commit -m "Build Draw-to-Life World exhibition prototype"
-git branch -M main
-git remote add origin https://github.com/<YOUR-ACCOUNT>/<YOUR-REPO>.git
-git push -u origin main
+# OR OpenAI API Key
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-Each member should branch from `main`, push their branch, and open a pull request. Merge Member 1's visual contract first, then Member 2 can wire services against the stable DOM and `current` object.
+---
 
-## Next integration seam
+## 🔌 API Endpoints
 
-The demo intentionally uses mock endpoints so it works without credentials. Replace the mock implementations in `server.js` with the chosen vision, language, speech-to-text, and text-to-speech providers. Keep the endpoint response shape stable so Member 1 does not need to change the UI. For a real avatar, return a transparent character asset or animation state alongside the character JSON.
+### `GET /api/health`
+Checks server status and reports if AI mode is active (`"mode": "ai"` or `"mode": "mock"`).
+
+### `POST /api/scan`
+Analyzes a drawing and creates a character.
+- **Body**: `{ "fileName": "drawing.png", "source": "camera" | "upload", "drawingDataUrl": "data:image/png;base64,..." }`
+- **Response**: `{ "ok": true, "mode": "ai", "character": { "id": "...", "name": "...", "type": "...", "speech": "..." } }`
+
+### `POST /api/story`
+Generates a mini adventure story for the character.
+- **Body**: `{ "character": { "name": "...", "type": "..." } }`
+- **Response**: `{ "ok": true, "story": ["Paragraph 1", "Paragraph 2"] }`
+
+### `POST /api/chat`
+Handles conversational replies in character.
+- **Body**: `{ "message": "Hello!", "language": "en-US", "character": { ... } }`
+- **Response**: `{ "ok": true, "reply": "Hello friend!" }`
+
+---
+
+## 👥 Two-Member Build Division
+
+| Role | Responsibilities | Key Files |
+| :--- | :--- | :--- |
+| **Member 1 (Frontend & Experience)** | Exhibition UI layout, wizard steps, character stage animations, speech controls, CSS glassmorphism | `dist/index.html`, `dist/styles.css` |
+| **Member 2 (AI & Backend)** | Vision recognition prompts, LLM story/chat logic, API routes, environment setup | `server.js`, `dist/app.js` |
